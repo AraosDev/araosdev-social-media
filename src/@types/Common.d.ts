@@ -59,6 +59,7 @@ interface ProfileIconProps {
   iconTextColor?: string;
   iconText?: string;
   profileDp?: string;
+  isOnline?: boolean;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 

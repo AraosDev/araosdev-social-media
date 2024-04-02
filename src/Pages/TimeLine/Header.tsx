@@ -1,9 +1,11 @@
 /* eslint-disable import/order */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { useRef, useState } from 'react';
-import { Badge, Dropdown, Form } from 'react-bootstrap';
-import { BsPlusSquare, BsXLg } from 'react-icons/bs';
+import { useCallback, useRef, useState } from 'react';
+import { Badge, Form } from 'react-bootstrap';
+import { AiOutlineHome } from 'react-icons/ai';
+import { BiLogOut } from 'react-icons/bi';
+import { BsChatDots, BsPlusSquare, BsXLg } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
@@ -52,6 +54,18 @@ const StyledTimeLineHeader = styled.div`
     background-color: rgb(204, 204, 255) !important;
     border: 1px solid rgb(93, 63, 211) !important;
   }
+  .msg-unread-count {
+    position: absolute;
+    top: 3%;
+    color: white;
+    background: red;
+    border-radius: 50%;
+    padding: 2px;
+    font-size: 10px;
+    font-weight: 700;
+    width: 15px;
+    text-align: center;
+  }
 `;
 
 function TimeLineHeader(): React.ReactElement {
@@ -62,6 +76,7 @@ function TimeLineHeader(): React.ReactElement {
   const postedImgRef = useRef<null | HTMLInputElement>(null);
 
   const { timelineState } = useAppSelector((state) => state.timelineReducer);
+  const { chatInfo } = useAppSelector((state) => state.messages);
 
   const [selectedFrnd, setSelectedFrnd] = useState('');
   const [frndReqState, setFrndReqState] = useState<
@@ -71,7 +86,6 @@ function TimeLineHeader(): React.ReactElement {
   const [postedImg, setPostedImg] = useState<null | File>(null);
   const [postedImgCaption, setPostedImgCaption] = useState('');
   const [postImgState, setPostImgState] = useState('');
-  const [openProfileDrpDwn, setOpenProfileDrpDwn] = useState(false);
   const [debouncedSearchKey, setDebouncedSearchKey] = useState('');
 
   const [postImage, { isLoading }] = usePostTimelineImgMutation();
@@ -84,6 +98,14 @@ function TimeLineHeader(): React.ReactElement {
     error: frndSuggestionErr,
   } = useSearchFriendListQuery(debouncedSearchKey);
   const [friendReqtTrigger] = useFriendRequestMutation();
+  const userInfo = currentUserInfo();
+
+  const unreadCount = useCallback(() => {
+    return chatInfo.reduce(
+      (prevCount, chat) => prevCount + chat.unreadCount,
+      0
+    );
+  }, [chatInfo]);
 
   const frndUserRelationChange = (
     frnd: UserInfo,
@@ -97,7 +119,7 @@ function TimeLineHeader(): React.ReactElement {
     const { reqType } = frndUserRelation(frnd.userName);
     const reqBody = {
       friendDetails: frnd,
-      userDetails: currentUserInfo(),
+      userDetails: userInfo,
       requestType:
         reqType || (label.includes('Accept') ? 'ACCEPT_REQ' : 'REJECT_REQ'),
     };
@@ -211,7 +233,11 @@ function TimeLineHeader(): React.ReactElement {
 
   const switchViews = (view: TimelineStates) => {
     dispatch(setTimelineState(view));
-    setOpenProfileDrpDwn(false);
+  };
+
+  const switchToMessageView = () => {
+    switchViews('MESSAGE_VIEW');
+    navigate('/messages');
   };
 
   return (
@@ -342,6 +368,34 @@ function TimeLineHeader(): React.ReactElement {
         className="d-flex justify-content-end align-items-center"
         style={{ flex: '3' }}
       >
+        {timelineState === 'MESSAGE_VIEW' ||
+        timelineState === 'ACCOUNT_VIEW' ? (
+          <AiOutlineHome
+            className="me-3 cursor-pointer"
+            data-testid="add-post"
+            color="#1c1950"
+            size={25}
+            title="Timeline"
+            onClick={() => {
+              switchViews('TIMELINE_VIEW');
+              navigate('/timeline');
+            }}
+          />
+        ) : null}
+        {timelineState === 'ACCOUNT_VIEW' ||
+        timelineState === 'TIMELINE_VIEW' ? (
+          <div>
+            <BsChatDots
+              className="me-3 cursor-pointer"
+              data-testid="add-post"
+              color="#1c1950"
+              size={25}
+              title="Chats"
+              onClick={switchToMessageView}
+            />
+            <div className="msg-unread-count">{unreadCount()}</div>
+          </div>
+        ) : null}
         <BsPlusSquare
           className="me-3 cursor-pointer"
           data-testid="add-post"
@@ -352,55 +406,28 @@ function TimeLineHeader(): React.ReactElement {
         />
         <ProfileIcon
           iconText={userName.charAt(0).toUpperCase()}
-          className="me-5"
+          className="me-5 cursor-pointer"
           onClick={() => {
-            setOpenProfileDrpDwn(!openProfileDrpDwn);
+            switchViews('ACCOUNT_VIEW');
+            navigate('/account-settings');
           }}
         />
-        <Dropdown.Menu
-          show={openProfileDrpDwn}
-          align="end"
-          style={{ top: 60, right: 50 }}
-        >
-          {timelineState !== 'TIMELINE_VIEW' ? (
-            <Dropdown.Item
-              onClick={() => {
+        <BiLogOut
+          className="me-3 cursor-pointer"
+          data-testid="add-post"
+          color="#1c1950"
+          size={25}
+          title="Logout"
+          onClick={() => {
+            logout(null).then((res) => {
+              if (res.data?.status === 'SUCCESS') {
+                localStorage.clear();
                 switchViews('TIMELINE_VIEW');
-                navigate('/timeline');
-              }}
-            >
-              My Timeline
-            </Dropdown.Item>
-          ) : null}
-          {/* {timelineState !== 'MESSAGE_VIEW' ? (
-            <Dropdown.Item onClick={() => switchViews('MESSAGE_VIEW')}>
-              Messages
-            </Dropdown.Item>
-          ) : null} */}
-          {timelineState !== 'ACCOUNT_VIEW' ? (
-            <Dropdown.Item
-              onClick={() => {
-                switchViews('ACCOUNT_VIEW');
-                navigate('/account-settings');
-              }}
-            >
-              Account Settings
-            </Dropdown.Item>
-          ) : null}
-          <Dropdown.Item
-            onClick={() => {
-              logout(null).then((res) => {
-                if (res.data?.status === 'SUCCESS') {
-                  localStorage.clear();
-                  switchViews('TIMELINE_VIEW');
-                  navigate('/', { replace: true });
-                }
-              });
-            }}
-          >
-            Logout
-          </Dropdown.Item>
-        </Dropdown.Menu>
+                navigate('/', { replace: true });
+              }
+            });
+          }}
+        />
       </div>
     </StyledTimeLineHeader>
   );

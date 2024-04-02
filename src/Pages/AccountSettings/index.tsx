@@ -8,8 +8,6 @@ import Preferences from './Preferences';
 import SettingsSideBar from './SettingsSideBar';
 import UpdatePwd from './UpdatePwd';
 
-import TimeLineHeader from 'Pages/TimeLine/Header';
-
 function AccountSettings() {
   const [currentSetting, setCurrentSetting] =
     useState<SettingsSidebarProps['currentSetting']>('general-settings');
@@ -29,7 +27,6 @@ function AccountSettings() {
 
   return (
     <Container fluid className="p-0">
-      <TimeLineHeader />
       <Row className="w-100">
         <Col lg={3} xl={3}>
           <SettingsSideBar

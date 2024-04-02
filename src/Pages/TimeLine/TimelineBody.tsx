@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import { Loader } from '../../Common/DataTransitionHandlers';
 import TimelinePostCard from '../../Common/TimelinePostCard';
 
-import MessageView from './Components/MessageView';
 import { didCurrentUserLiked } from './HelperFns';
 
 import {
@@ -16,7 +15,6 @@ import {
   useUpdateCommentMutation,
   useUpdateLikeCountMutation,
 } from 'Store/apiSlices/mainAPISlice';
-import { useAppSelector } from 'Store/store/hooks';
 
 const StyledTimelineBody = styled.div`
   max-height: calc(100vh - 85px);
@@ -26,16 +24,12 @@ const StyledTimelineBody = styled.div`
     min-height: calc(100vh - 85px);
   }
   .timeline-body-container {
-    background-color: rgb(204, 204, 255);
-    border-left: 1px solid rgb(93, 63, 211) !important;
-    border-right: 1px solid rgb(93, 63, 211) !important;
+    background-color: #ccccff;
+    border-left: 1px solid #5d3fd3 !important;
+    border-right: 1px solid #5d3fd3 !important;
     width: 750px;
     .loader-element {
       height: calc(100vh - 85px);
-    }
-    .tab-content {
-      background: white;
-      min-height: calc(100vh - 159px);
     }
     .list-grp-custom-cls {
       border: 1px solid rgba(0, 0, 0, 0.125);
@@ -51,12 +45,9 @@ const StyledTimelineBody = styled.div`
       box-shadow: 0 1px rgb(204 204 255);
       border-bottom: 1px solid rgb(204, 204, 255) !important;
     }
-    .profile-comment {
-      flex: 1;
-    }
     .bg-primary {
-      background-color: rgb(204, 204, 255) !important;
-      border: 1px solid rgb(93, 63, 211) !important;
+      background-color: #ccccff !important;
+      border: 1px solid #5d3fd3 !important;
     }
   }
 `;
@@ -65,20 +56,11 @@ function TimelineBody(): React.ReactElement {
   const { isLoading, isSuccess, data } = useGetTimeLineImgsQuery(undefined);
   const [updateLikeCountFn] = useUpdateLikeCountMutation();
   const [updateCommentFn] = useUpdateCommentMutation();
-  // const [friendReqtTrigger] = useFriendRequestMutation();
-  const { timelineState } = useAppSelector((state) => state.timelineReducer);
-
-  // const { friends, friendRequests } = currentUserInfo() as UserInfo;
-  // const { requestedTo, requestedBy } = friendRequests;
 
   const [openedCommentSectImgs, setOpenCommentSecImgs] = useState<string[]>([]);
   const [newCommentInImgs, setNewCommentInImgs] = useState<
     { id: string; comment: string }[]
   >([]);
-  /* const [frndReqState, setFrndReqState] = useState<
-    { friend: string; state: string }[]
-  >([]); */
-  // const [frndReqTab, setFrndReqTab] = useState<string>('My Friends');
 
   const updateLikeCount = (
     imgDetail: TransformedTimelineImgRes,
@@ -135,11 +117,7 @@ function TimelineBody(): React.ReactElement {
         />
       );
     }
-    if (
-      isSuccess &&
-      timelineState !== 'ACCOUNT_VIEW' &&
-      timelineState !== 'MESSAGE_VIEW'
-    ) {
+    if (isSuccess) {
       return (
         <div className="py-3">
           {data?.map((image, index) => (
@@ -190,9 +168,6 @@ function TimelineBody(): React.ReactElement {
           ))}
         </div>
       );
-    }
-    if (timelineState === 'MESSAGE_VIEW') {
-      return <MessageView />;
     }
     return null;
   };

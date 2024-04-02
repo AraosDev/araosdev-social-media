@@ -6,6 +6,7 @@ import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { render as rtlRender, RenderOptions } from '@testing-library/react';
 
 import { adsmApiSlice } from 'Store/apiSlices/mainAPISlice';
+import messagesReducer from 'Store/reducer/messageReducer';
 import timelineReducer from 'Store/reducer/timelineReducer';
 import { AppStore, RootState } from 'Store/store';
 
@@ -23,6 +24,7 @@ function renderWithStore(
     store = configureStore({
       reducer: {
         timelineReducer,
+        messages: messagesReducer,
         [adsmApiSlice.reducerPath]: adsmApiSlice.reducer,
       },
       middleware: (defaultMiddleware) =>
