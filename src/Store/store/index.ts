@@ -5,10 +5,12 @@ import {
 } from '@reduxjs/toolkit';
 
 import { adsmApiSlice } from 'Store/apiSlices/mainAPISlice';
+import messagesReducer from 'Store/reducer/messageReducer';
 import timelineReducer from 'Store/reducer/timelineReducer';
 
 const rootReducer = combineReducers({
   timelineReducer,
+  messages: messagesReducer,
   [adsmApiSlice.reducerPath]: adsmApiSlice.reducer,
 });
 

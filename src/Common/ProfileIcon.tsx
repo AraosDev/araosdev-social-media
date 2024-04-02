@@ -10,34 +10,40 @@ const StyledProfileIcon = styled.div`
   width: ${(props) => props.iconSize};
   height: ${(props) => props.iconSize};
   border-radius: 50%;
-  background-color: ${(props) => props.iconBg};
   color: ${(props: ProfileIconProps) => props.iconTextColor};
   img {
     width: ${(props) => props.iconSize};
     height: ${(props) => props.iconSize};
     border-radius: 50%;
   }
+  .green-dot {
+    width: 5px;
+    border-radius: 50%;
+    border: 5px solid green;
+    position: relative;
+    top: 35%;
+    right: 25%;
+  }
 `;
 
 function ProfileIcon({
   className = '',
-  iconBg = '#1c1950',
   iconSize = '40px',
   iconTextColor = 'white',
-  iconText = '',
   profileDp = '',
+  isOnline = false,
   ...otherProps
 }: ProfileIconProps) {
   const imageSrc = profileDp || currentUserInfo().photo || DefaultDp;
   return (
     <StyledProfileIcon
-      iconBg={iconBg}
       iconSize={iconSize}
       iconTextColor={iconTextColor}
       className={`cursor-pointer d-flex justify-content-center align-items-center ${className}`}
       {...otherProps}
     >
       <img src={imageSrc} className="dp-image" alt="user-dp" />
+      {isOnline && <div className="green-dot" />}
     </StyledProfileIcon>
   );
 }
