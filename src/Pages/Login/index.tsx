@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 import './index.css';
 
 import { LoginAccountConstants } from 'Common/AppLabels/LoginPageLabels';
+import { currentUserInfo } from 'Common/helperFns';
 import { useLoggedInUserInfoMutation } from 'Store/apiSlices/mainAPISlice';
 import { getLoggedInUserInfo } from 'Store/mutationTriggers/loginTriggers';
 import { setTimelineState } from 'Store/reducer/timelineReducer';
@@ -26,6 +27,7 @@ const {
 function Login(): React.ReactElement {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userInfo = currentUserInfo();
   const [loggedInUserInfo] = useLoggedInUserInfoMutation();
 
   const [userName, setUserName] = useState('');
@@ -43,6 +45,8 @@ function Login(): React.ReactElement {
       }
     );
   };
+
+  if (userInfo.id) return <Navigate to="/timeline" />;
 
   return (
     <div className="wrapper">
