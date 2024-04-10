@@ -33,7 +33,7 @@ function TimelinePostCard({
     <Card className={cardClassName} style={cardStyle} {...cardProps}>
       <Card.Header className="d-flex">
         <ProfileIcon
-          profileDp={profileDp}
+          profileDp={profileDp || 'DEFAULT'}
           iconText={imagePostedBy.charAt(0).toUpperCase()}
         />
         <div
@@ -98,7 +98,7 @@ function TimelinePostCard({
                 <ProfileIcon
                   iconText={comment.userName.charAt(0).toUpperCase()}
                   iconSize="28px"
-                  profileDp={comment.userPhoto}
+                  profileDp={comment.userPhoto || 'DEFAULT'}
                 />
                 <span
                   className="ms-2 d-flex justify-content-between"

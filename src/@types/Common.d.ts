@@ -46,10 +46,13 @@ interface ModalCompProps {
   header: string;
   modalBody: () => JSX.Element;
   validationMsg?: string;
-  proceedHandler: () => void;
-  proceedValidation: boolean;
-  proceedLabel: string;
+  proceedHandler?: () => void;
+  proceedValidation?: boolean;
+  proceedLabel?: string;
   bodyClass?: string;
+  shouldShowProceedBtn?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  titleTag?: ElementType<any>;
 }
 
 interface ProfileIconProps {

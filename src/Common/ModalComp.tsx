@@ -12,6 +12,8 @@ function ModalComp({
   proceedValidation,
   proceedLabel,
   bodyClass = '',
+  shouldShowProceedBtn = true,
+  titleTag = '',
 }: ModalCompProps) {
   return (
     <Modal
@@ -21,20 +23,22 @@ function ModalComp({
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title>{header}</Modal.Title>
+        <Modal.Title as={titleTag}>{header}</Modal.Title>
       </Modal.Header>
       <Modal.Body className={bodyClass}>{modalBody()}</Modal.Body>
-      <Modal.Footer>
-        <div title={validationMsg}>
-          <Button
-            variant="primary"
-            onClick={proceedHandler}
-            disabled={!proceedValidation}
-          >
-            {proceedLabel}
-          </Button>
-        </div>
-      </Modal.Footer>
+      {shouldShowProceedBtn && (
+        <Modal.Footer>
+          <div title={validationMsg}>
+            <Button
+              variant="primary"
+              onClick={proceedHandler}
+              disabled={!proceedValidation}
+            >
+              {proceedLabel}
+            </Button>
+          </div>
+        </Modal.Footer>
+      )}
     </Modal>
   );
 }
