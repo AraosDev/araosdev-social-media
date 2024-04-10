@@ -10,7 +10,7 @@ interface GetChatInfoRes {
     userName: string;
     onlineStatus: string;
   };
-  recentMessage: {
+  recentMessage?: {
     content: string;
     sentBy: string;
     sentAt: string;
@@ -18,9 +18,59 @@ interface GetChatInfoRes {
   unreadCount: number;
 }
 
-type ChatLoaderStates = 'LOADING' | 'LOADED' | 'ERROR';
+interface CreateChatReq {
+  owner: string;
+  member: string;
+}
+
+interface ChatMessages {
+  id: string;
+  sentBy: GetChatInfoRes['recepientDetails'];
+  sentAt: string;
+  type: string;
+  content: string;
+  chatId: string;
+  isRead?: boolean;
+  isDelivered?: boolean;
+}
+
+interface GetMessagesReq {
+  chatId: string;
+  userId: string;
+}
+
+interface SendMessageReq {
+  chatId: string;
+  sentBy: string;
+  content: string;
+}
+
+interface GetMessagesRes {
+  chatId: GetMessagesReq['chatId'];
+  messages: ChatMessages[];
+}
+
+type ChatLoaderStates =
+  | 'LOADING_CHATS'
+  | 'LOADED_CHATS'
+  | 'ERROR_CHATS'
+  | 'LOADING_MESSAGES'
+  | 'LOADED_MESSAGES'
+  | 'ERROR_MESSAGES'
+  | null;
 
 interface MessagesState {
-  chatLoaderState: ChatLoaderStates | null;
+  chatLoaderState: ChatLoaderStates;
   chatInfo: GetChatInfoRes[];
+  currentChatDetails: GetChatInfoRes;
+  currentChatMessages: ChatMessages[];
+}
+
+interface MessageViewProps {
+  openChat: React.Dispatch<React.SetStateAction<boolean>>;
+  setChatMessages: (messagesRes: GetMessagesRes) => void;
+}
+
+interface MessageProps extends Omit<ChatMessages, 'id' | 'sentBy' | 'chatId'> {
+  messageType: 'INCOMING' | 'OUTGOING';
 }

@@ -132,7 +132,7 @@ function RenderFriendist(props: RenderFriendListProps) {
           className="d-flex align-items-center justify-content-between"
         >
           <div className="d-flex align-items-center">
-            <ProfileIcon profileDp={photo} className="mx-2" />
+            <ProfileIcon profileDp={photo || 'DEFAULT'} className="mx-2" />
             {userName}
           </div>
           <div>{getActionButtons({ userName, id, photo, ...rest })}</div>

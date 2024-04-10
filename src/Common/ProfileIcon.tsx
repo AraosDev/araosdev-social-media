@@ -34,7 +34,10 @@ function ProfileIcon({
   isOnline = false,
   ...otherProps
 }: ProfileIconProps) {
-  const imageSrc = profileDp || currentUserInfo().photo || DefaultDp;
+  const imageSrc =
+    profileDp === 'DEFAULT'
+      ? DefaultDp
+      : profileDp || currentUserInfo().photo || DefaultDp;
   return (
     <StyledProfileIcon
       iconSize={iconSize}
