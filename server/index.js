@@ -1,9 +1,10 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const express = require('express');
+const cors = require('cors');
 const { updateFrndAndCurrentUser } = require('./utils');
 
 const app = express();
-
+app.use(cors());
 app.post(
   '/friendReq/:reqType',
   express.json({ limit: '10kb' }),
