@@ -13,7 +13,8 @@ import {
   updateLikeCountTransformer,
 } from 'Store/transformers/timelineTransformer';
 
-export const appApiBaseURL = '/';
+export const appApiBaseURL =
+  'https://araosdev-social-media-frontend.onrender.com';
 
 export const adsmApiSlice = createApi({
   reducerPath: 'adsmMainReducer',

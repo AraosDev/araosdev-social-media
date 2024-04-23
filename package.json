@@ -29,7 +29,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "server": "node server/index.js",
+    "server": "nodemon server/index.js",
     "client": "react-scripts start",
     "start": "concurrently --kill-others \"npm run server\" \"npm run client\"",
     "build": "react-scripts build",
@@ -57,7 +57,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3001",
+  "proxy": "https://araosdev-social-media-frontend.onrender.com",
   "devDependencies": {
     "@babel/preset-typescript": "^7.21.0",
     "@jest/globals": "^29.5.0",
