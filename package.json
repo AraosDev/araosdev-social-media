@@ -29,9 +29,9 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "server": "nodemon server/index.js",
+    "server": "node server/index.js",
     "client": "react-scripts start",
-    "start": "react-scripts start",
+    "start": "concurrently --kill-others \"npm run server\" \"npm run client\"",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false --coverage --testResultsProcessor",
     "eject": "react-scripts eject",
@@ -70,6 +70,7 @@
     "@typescript-eslint/eslint-plugin": "^5.55.0",
     "@typescript-eslint/parser": "^5.56.0",
     "blob-polyfill": "^7.0.20220408",
+    "concurrently": "^8.2.2",
     "eslint": "^8.36.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.8.0",

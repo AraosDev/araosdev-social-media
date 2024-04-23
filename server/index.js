@@ -137,8 +137,8 @@ const apiProxy = createProxyMiddleware({
   router: (req) => {
     console.log(req.originalUrl);
     if (req.originalUrl.includes('AUTHNZ'))
-      return 'http://localhost:5000/api/v1/adsm/';
-    return 'http://localhost:5001/araosdevsm/';
+      return 'https://auth-nz.onrender.com/api/v1/adsm/';
+    return 'https://araosdev-social-media-backend.onrender.com/araosdevsm/';
   },
   changeOrigin: true,
   pathRewrite(path) {
