@@ -4,7 +4,15 @@ const cors = require('cors');
 const { updateFrndAndCurrentUser } = require('./utils');
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      'http://localhost:3000',
+      'https://araosdev-social-media-frontend.onrender.com',
+    ],
+    credentials: true,
+  })
+);
 app.post(
   '/friendReq/:reqType',
   express.json({ limit: '10kb' }),
