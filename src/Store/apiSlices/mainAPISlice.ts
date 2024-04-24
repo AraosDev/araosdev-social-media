@@ -14,7 +14,7 @@ import {
 } from 'Store/transformers/timelineTransformer';
 
 export const appApiBaseURL =
-  'https://araosdev-social-media-frontend.onrender.com';
+  'https://araosdev-social-media-middleware.onrender.com';
 
 export const adsmApiSlice = createApi({
   reducerPath: 'adsmMainReducer',

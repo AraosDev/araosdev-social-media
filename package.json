@@ -57,7 +57,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://araosdev-social-media-frontend.onrender.com",
+  "proxy": "https://araosdev-social-media-middleware.onrender.com",
   "devDependencies": {
     "@babel/preset-typescript": "^7.21.0",
     "@jest/globals": "^29.5.0",
