@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "sourceMap": false,
+        "target": "ESNext",
+        "moduleResolution": "Node",
+        "removeComments": true,
+        "strictPropertyInitialization": true,
+        "strictNullChecks": true,
+        "types": [
+            "node",
+            "jest",
+            "@testing-library/jest-dom",
+            "@wdio/globals/types",
+            "expect-webdriverio",
+            "@wdio/mocha-framework",
+            "@wdio/appium-service"
+        ],
+    },
+    "include": [
+        "pages/**/*.ts",
+        "specs/**/*.ts",
+        "../utils/**/*.ts"
+    ]
+}
