@@ -1,7 +1,7 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const express = require('express');
 const cors = require('cors');
-const { updateFrndAndCurrentUser } = require('./utils');
+const { updateFrndAndCurrentUser } = require('./utils.cjs');
 
 const app = express();
 app.use(
