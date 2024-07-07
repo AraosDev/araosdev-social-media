@@ -13,7 +13,7 @@ function ModalComp({
   proceedLabel,
   bodyClass = '',
   shouldShowProceedBtn = true,
-  titleTag = '',
+  titleTag = 'h2',
 }: ModalCompProps) {
   return (
     <Modal

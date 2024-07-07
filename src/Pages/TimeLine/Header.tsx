@@ -251,6 +251,7 @@ function TimeLineHeader(): React.ReactElement {
         proceedValidation={
           Boolean(postedImg) && Boolean(postedImgCaption) && !postImgState
         }
+        titleTag="h3"
         proceedHandler={postTimelineImage}
         validationMsg={
           !postedImg
