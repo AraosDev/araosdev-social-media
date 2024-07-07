@@ -9,7 +9,7 @@ exports.updateFrndAndCurrentUser = async (
 
   if (Object.keys(userReqBody).length) {
     const updatedUser = await fetch(
-      'http://localhost:5000/api/v1/adsm/autnN/updateAccount/me',
+      'https://auth-nz.onrender.com/api/v1/adsm/autnN/updateAccount/me',
       {
         method: 'PATCH',
         body: JSON.stringify(userReqBody),
@@ -25,7 +25,7 @@ exports.updateFrndAndCurrentUser = async (
 
   if (frndReqBody && Object.keys(frndReqBody).length) {
     const updatedFrnd = await fetch(
-      `http://localhost:5000/api/v1/adsm/autnN/updateAccount/${frndId}`,
+      `https://auth-nz.onrender.com/api/vautnN/updateAccount/${frndId}`,
       {
         method: 'PATCH',
         body: JSON.stringify(frndReqBody),
