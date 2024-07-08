@@ -27,7 +27,7 @@ exports.updateFrndAndCurrentUser = async (
 
   if (frndReqBody && Object.keys(frndReqBody).length) {
     const updatedFrnd = await fetch(
-      `https://auth-nz.onrender.com/api/vautnN/updateAccount/${frndId}`,
+      `https://auth-nz.onrender.com/api/v1/autnN/updateAccount/${frndId}`,
       {
         method: 'PATCH',
         body: JSON.stringify(frndReqBody),
