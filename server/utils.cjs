@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 exports.updateFrndAndCurrentUser = async (
   userReqBody,
   frndReqBody,
